@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HYROX 双人组 45天训练计划</title>
+    <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Noto Sans SC', system-ui, sans-serif;
+            background: #f8fafc;
+            color: #1a1a2e;
+            line-height: 1.6;
+        }
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            position: relative;
+            overflow: hidden;
+            padding: 80px 0 60px;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 50%, rgba(239,68,68,0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 80% 50%, rgba(59,130,246,0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+        .hero-grid {
+            position: absolute;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+        }
+        .hero-content { position: relative; z-index: 1; }
+
+        /* Countdown */
+        .countdown-bar {
+            background: rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 16px;
+            padding: 20px 32px;
+        }
+
+        /* Phase Cards */
+        .phase-card {
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            transition: all 0.3s ease;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+        }
+        .phase-card:hover {
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            transform: translateY(-2px);
+        }
+        .phase-header {
+            padding: 24px 28px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            border-bottom: 1px solid #f1f5f9;
+        }
+        .phase-body { padding: 0 28px 28px; }
+
+        /* Day Card */
+        .day-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px 24px;
+            transition: all 0.2s;
+        }
+        .day-card:hover {
+            border-color: #cbd5e1;
+            background: #f1f5f9;
+        }
+        .day-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 14px;
+            background: #1e293b;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        /* Station badges */
+        .station-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 600;
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+        .station-badge:hover { border-color: #94a3b8; }
+        .station-badge i { font-size: 14px; }
+
+        /* Exercise Tag */
+        .ex-tag {
+            display: inline-block;
+            padding: 4px 14px;
+            border-radius: 100px;
+            font-size: 13px;
+            font-weight: 500;
+            background: #eef2ff;
+            color: #4338ca;
+            margin: 3px 4px 3px 0;
+        }
+        .ex-tag.run { background: #fef2f2; color: #dc2626; }
+        .ex-tag.strength { background: #f0fdf4; color: #16a34a; }
+        .ex-tag.functional { background: #fffbeb; color: #d97706; }
+        .ex-tag.station { background: #f5f3ff; color: #7c3aed; }
+
+        /* Timeline */
+        .timeline-line { position: relative; }
+        .timeline-line::before {
+            content: '';
+            position: absolute;
+            left: 17px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: #e2e8f0;
+        }
+
+        /* Stats Cards */
+        .stat-card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+        .stat-number {
+            font-size: 36px;
+            font-weight: 900;
+            line-height: 1;
+            background: linear-gradient(135deg, #1e293b, #475569);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Phase Timeline Bar */
+        .phase-timeline {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            background: #fff;
+            border-radius: 100px;
+            border: 1px solid #e2e8f0;
+            overflow: hidden;
+        }
+        .phase-timeline-item {
+            flex: 1;
+            text-align: center;
+            padding: 12px 8px;
+            font-size: 13px;
+            font-weight: 600;
+            position: relative;
+            color: #64748b;
+        }
+        .phase-timeline-item.active {
+            background: #1e293b;
+            color: #fff;
+        }
+        .phase-timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 24px;
+            background: #e2e8f0;
+        }
+
+        /* Substitution Box */
+        .sub-box {
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 12px;
+            padding: 16px 20px;
+        }
+        .sub-box i { color: #d97706; }
+
+        /* Mobile */
+        @media (max-width: 640px) {
+            .hero { padding: 40px 0 30px; }
+            .phase-body { padding: 0 16px 20px; }
+            .phase-header { padding: 16px 20px; }
+            .day-card { padding: 16px; }
+            .phase-timeline { border-radius: 12px; flex-wrap: wrap; }
+            .phase-timeline-item { flex: 1 0 50%; font-size: 12px; padding: 10px 6px; }
+        }
+
+        /* Accordion animation */
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .accordion-content.open { max-height: 3000px; }
+        .accordion-toggle .chevron { transition: transform 0.3s ease; }
+        .accordion-toggle.open .chevron { transform: rotate(180deg); }
+    </style>
+</head>
+<body>
+
+<!-- ============ HERO ============ -->
+<section class="hero">
+    <div class="hero-grid"></div>
+    <div class="hero-content max-w-5xl mx-auto px-4 sm:px-6">
+        <div class="flex flex-wrap items-center gap-3 mb-4">
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-red-500/20 text-red-400 text-sm font-semibold border border-red-500/30">
+                <i class="fas fa-users"></i> 双人组 Doubles
+            </span>
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-blue-500/20 text-blue-400 text-sm font-semibold border border-blue-500/30">
+                <i class="fas fa-calendar-alt"></i> 45天备战
+            </span>
+            <span class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/20 text-emerald-400 text-sm font-semibold border border-emerald-500/30">
+                <i class="fas fa-dumbbell"></i> 中级 · 23岁
+            </span>
+        </div>
+        <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight tracking-tight mb-4">
+            HYROX <span style="background: linear-gradient(135deg, #f87171, #fb923c); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">45天</span> 训练计划
+        </h1>
+        <p class="text-lg sm:text-xl text-slate-300 max-w-2xl mb-8 leading-relaxed">
+            专为双人组设计的系统训练方案，涵盖跑步耐力、站点力量、转换训练与比赛策略，助你和搭档在45天后全力冲刺！
+        </p>
+
+        <!-- Countdown Info -->
+        <div class="countdown-bar flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center gap-4">
+                <div class="flex items-center gap-3">
+                    <div class="text-center">
+                        <div class="text-3xl font-black text-white">6.5</div>
+                        <div class="text-xs text-slate-400">周</div>
+                    </div>
+                    <div class="text-3xl text-slate-500">→</div>
+                    <div class="text-center">
+                        <div class="text-3xl font-black text-white">45</div>
+                        <div class="text-xs text-slate-400">天</div>
+                    </div>
+                    <div class="text-3xl text-slate-500">→</div>
+                    <div class="text-center">
+                        <div class="text-3xl font-black text-emerald-400">RACE</div>
+                        <div class="text-xs text-slate-400">比赛日</div>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center gap-3 text-sm text-slate-400">
+                <i class="fas fa-running"></i>
+                <span>4次训练 / 周</span>
+                <span class="hidden sm:inline mx-2">·</span>
+                <i class="fas fa-clock hidden sm:inline"></i>
+                <span class="hidden sm:inline">每次约45-75分钟</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ DOUBLES STRATEGY ============ -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 -mt-8 relative z-10">
+    <div class="bg-white rounded-2xl shadow-lg border border-slate-200 p-6 sm:p-8">
+        <div class="flex items-start gap-4">
+            <div class="w-12 h-12 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
+                <i class="fas fa-people-arrows text-indigo-600 text-xl"></i>
+            </div>
+            <div>
+                <h2 class="text-xl font-bold text-slate-900 mb-3">🎯 双人组策略指南</h2>
+                <div class="grid sm:grid-cols-2 gap-4">
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                        <div class="font-semibold text-slate-900 mb-1">赛制速览</div>
+                        <p class="text-sm text-slate-600">你和搭档每次<strong class="text-slate-900">一起跑完1km</strong>，然后<strong class="text-slate-900">分工完成一个站点</strong>（可交替、可一人做完），共循环8轮。每人跑满8km，站点工作量平分或按优势分配。</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                        <div class="font-semibold text-slate-900 mb-1">建议分工策略</div>
+                        <p class="text-sm text-slate-600">力量型选手负责 Sled Push/Pull、Farmers Carry；耐力型选手负责 SkiErg、Rowing、Burpee Broad Jumps。Wall Balls 和 Sandbag Lunges 可轮换完成。现在就商量好分工！</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                        <div class="font-semibold text-slate-900 mb-1">本计划使用方式</div>
+                        <p class="text-sm text-slate-600">你和搭档<strong class="text-slate-900">共用此计划</strong>。每周4次训练包含跑步、力量、功能循环和转换训练。你们可一起训练，也可各自训练。标有"搭档合作"的课目建议两人一起完成。</p>
+                    </div>
+                    <div class="bg-slate-50 rounded-xl p-4 border border-slate-100">
+                        <div class="font-semibold text-slate-900 mb-1">器材替代方案</div>
+                        <p class="text-sm text-slate-600">本计划已针对你现有的器材（划船机、壶铃、杠铃/哑铃、龙门架）进行适配。缺少的站点都有<strong class="text-slate-900">替代训练</strong>，见下方标注。</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ PHASE TIMELINE ============ -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 mt-10">
+    <h2 class="text-2xl font-bold text-slate-900 mb-6">📅 训练周期总览</h2>
+    <div class="overflow-x-auto">
+        <div class="phase-timeline min-w-[500px]">
+            <div class="phase-timeline-item active">
+                <i class="fas fa-seedling text-emerald-500 block text-lg mb-1"></i>
+                基础期<br><span class="text-xs font-normal opacity-70">第1-2周</span>
+            </div>
+            <div class="phase-timeline-item">
+                <i class="fas fa-chart-line text-blue-500 block text-lg mb-1"></i>
+                建设期<br><span class="text-xs font-normal opacity-70">第3-4周</span>
+            </div>
+            <div class="phase-timeline-item">
+                <i class="fas fa-fire text-orange-500 block text-lg mb-1"></i>
+                强化期<br><span class="text-xs font-normal opacity-70">第5周</span>
+            </div>
+            <div class="phase-timeline-item">
+                <i class="fas fa-bolt text-red-500 block text-lg mb-1"></i>
+                模拟期<br><span class="text-xs font-normal opacity-70">第6周</span>
+            </div>
+            <div class="phase-timeline-item">
+                <i class="fas fa-bed text-purple-500 block text-lg mb-1"></i>
+                减量<br><span class="text-xs font-normal opacity-70">第7周</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
+        <div class="stat-card">
+            <div class="stat-number">12</div>
+            <div class="text-sm text-slate-500 mt-1">跑步训练</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">8</div>
+            <div class="text-sm text-slate-500 mt-1">力量训练</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">8</div>
+            <div class="text-sm text-slate-500 mt-1">功能循环</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">4</div>
+            <div class="text-sm text-slate-500 mt-1">转换训练</div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ PHASE 1: FOUNDATION ============ -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 mt-12">
+    <div class="phase-card" id="phase1">
+        <div class="phase-header" onclick="togglePhase(this)">
+            <div class="flex items-center gap-4">
+                <span class="w-10 h-10 rounded-xl bg-emerald-100 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-seedling text-emerald-600 text-lg"></i>
+                </span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">第一阶段 · 基础构建</h3>
+                    <p class="text-sm text-slate-500">第1-2周（Day 1-14）— 建立动作模式与有氧基础</p>
+                </div>
+            </div>
+            <i class="fas fa-chevron-down text-slate-400 chevron transition-transform"></i>
+        </div>
+        <div class="accordion-content open">
+            <div class="phase-body">
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold">目标：学会所有动作</span>
+                    <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold">跑步量：8-12km/周</span>
+                    <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold">轻重量为主</span>
+                    <span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold">注重技术</span>
+                </div>
+
+                <!-- Week 1 -->
+                <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-slate-800 text-white text-xs flex items-center justify-center">1</span>
+                    第1周
+                </h4>
+                <div class="grid md:grid-cols-2 gap-4 mb-8">
+                    <!-- Day 1 -->
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D1</span>
+                            <span class="font-semibold text-slate-900">🏃 基础跑 + 核心</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 45min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>动态拉伸 5min + 轻松慢跑 800m</p>
+                            <p><span class="font-medium text-slate-800">主课：</span>3km 轻松跑（配速比目标比赛配速慢30-40秒/km，能交谈的节奏）</p>
+                            <p><span class="font-medium text-slate-800">核心：</span>平板支撑 3×30秒 · 鸟狗式 3×10/侧 · 死虫式 3×10/侧</p>
+                            <p><span class="font-medium text-slate-800">冷身：</span>步行5min + 静态拉伸</p>
+                        </div>
+                    </div>
+                    <!-- Day 2 -->
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D2</span>
+                            <span class="font-semibold text-slate-900">💪 全身力量基础</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 50min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>空杆深蹲2×10 · 肩环绕 · 髋关节打开</p>
+                            <p><span class="font-medium text-slate-800">主课（4轮，组间休息90秒）：</span></p>
+                            <p class="pl-3">• 杠铃深蹲 8-10次（选择能做10次的重量）</p>
+                            <p class="pl-3">• 哑铃/壶铃摇摆 12次</p>
+                            <p class="pl-3">• 高位下拉/引体向上 8-10次</p>
+                            <p class="pl-3">• 俯卧撑 10-15次</p>
+                            <p><span class="font-medium text-slate-800">冷身：</span>拉伸股四头肌、腘绳肌、胸椎</p>
+                        </div>
+                    </div>
+                    <!-- Day 3 Rest -->
+                    <div class="day-card border-dashed opacity-60">
+                        <div class="flex items-center gap-3">
+                            <span class="day-number" style="background:#94a3b8;">休</span>
+                            <span class="font-semibold text-slate-500">休息 / 主动恢复</span>
+                        </div>
+                        <p class="text-sm text-slate-400 mt-2">推荐：散步20-30min · 泡沫轴放松 · 拉伸15min</p>
+                    </div>
+                    <!-- Day 4 -->
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D4</span>
+                            <span class="font-semibold text-slate-900">🔄 功能循环入门</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 50min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>划船机500m轻松 + 波比简化10次</p>
+                            <p><span class="font-medium text-slate-800">主课（循环，完成4轮，组间休息2min）：</span></p>
+                            <p class="pl-3">• 🚣 划船机 500m @ 轻松配速</p>
+                            <p class="pl-3">• 🏋️ 壶铃硬拉 15次（轻重量，学动作）</p>
+                            <p class="pl-3">• 🤸 波比跳远（无跳远版：原地波比+向前跳一小步）12次</p>
+                            <p class="pl-3">• 🏋️ 哑铃火箭推（深蹲+推举）10次</p>
+                            <p class="pl-3">• 🫲 农夫行走 40m（手持壶铃或哑铃）</p>
+                            <p><span class="font-medium text-slate-800">冷身：</span>轻松划船500m + 拉伸</p>
+                            <div class="sub-box mt-3 text-xs">
+                                <i class="fas fa-lightbulb"></i> <strong>缺少器材替代：</strong> 无雪橇→用龙门架低位绳索做"雪橇推模拟"（弓步推）4组×15m；无滑雪机→用划船机替代或高位下拉快速拉
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 2 -->
+                <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-slate-800 text-white text-xs flex items-center justify-center">2</span>
+                    第2周
+                </h4>
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D5</span>
+                            <span class="font-semibold text-slate-900">🏃 节奏跑</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 45min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>动态拉伸 5min + 慢跑 800m</p>
+                            <p><span class="font-medium text-slate-800">主课：</span></p>
+                            <p class="pl-3">• 1km 轻松跑</p>
+                            <p class="pl-3">• <strong>3km 节奏跑</strong>（"舒适困难"的节奏，能说简短句子，约85%最大心率）</p>
+                            <p class="pl-3">• 1km 轻松冷身</p>
+                            <p><span class="font-medium text-slate-800">冷身：</span>拉伸腘绳肌、髋屈肌、小腿</p>
+                        </div>
+                    </div>
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D6</span>
+                            <span class="font-semibold text-slate-900">💪 力量进阶</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 55min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>轻重量动作激活</p>
+                            <p><span class="font-medium text-slate-800">主课（5轮，组间休息60-90秒）：</span></p>
+                            <p class="pl-3">• 杠铃硬拉（传统或六角杠）6-8次</p>
+                            <p class="pl-3">• 壶铃单臂划船 10次/侧</p>
+                            <p class="pl-3">• 保加利亚分腿蹲 8次/侧（哑铃）</p>
+                            <p class="pl-3">• 悬垂举腿/卷腹 12次</p>
+                            <p><span class="font-medium text-slate-800">冷身：</span>拉伸 + 胸椎活动度</p>
+                        </div>
+                    </div>
+                    <div class="day-card border-dashed opacity-60">
+                        <div class="flex items-center gap-3">
+                            <span class="day-number" style="background:#94a3b8;">休</span>
+                            <span class="font-semibold text-slate-500">休息 / 主动恢复</span>
+                        </div>
+                    </div>
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D7</span>
+                            <span class="font-semibold text-slate-900">🔄 站点专项循环</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 55min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>划船500m + 动态伸展 5min</p>
+                            <p><span class="font-medium text-slate-800">主课（4轮，组间休息2min）：</span></p>
+                            <p class="pl-3">• 🚣 划船机 600m @ 中等配速</p>
+                            <p class="pl-3">• 🏋️ 壶铃摇摆 15次（加重5-10%）</p>
+                            <p class="pl-3">• 🤸 波比跳远（简化：波比+前跳）15次</p>
+                            <p class="pl-3">• 🫲 农夫行走 50m（壶铃/哑铃，加重）</p>
+                            <p class="pl-3">• 🏋️ 哑铃火箭推 12次</p>
+                            <p><span class="font-medium text-slate-800">🔑 双人合作可选项：</span>你和搭档轮流完成站点，模拟比赛节奏——一人做站，另一人慢跑或休息 -> 轮换</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ PHASE 2: BUILD ============ -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 mt-6">
+    <div class="phase-card" id="phase2">
+        <div class="phase-header" onclick="togglePhase(this)">
+            <div class="flex items-center gap-4">
+                <span class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-chart-line text-blue-600 text-lg"></i>
+                </span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">第二阶段 · 强度建设</h3>
+                    <p class="text-sm text-slate-500">第3-4周（Day 15-28）— 提升跑步配速与站点力量</p>
+                </div>
+            </div>
+            <i class="fas fa-chevron-down text-slate-400 chevron"></i>
+        </div>
+        <div class="accordion-content">
+            <div class="phase-body">
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">目标：提升强度</span>
+                    <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">跑步量：15-18km/周</span>
+                    <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">增加重量</span>
+                    <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-semibold">引入间歇跑</span>
+                </div>
+
+                <!-- Week 3 -->
+                <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-slate-800 text-white text-xs flex items-center justify-center">3</span>
+                    第3周
+                </h4>
+                <div class="grid md:grid-cols-2 gap-4 mb-8">
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D8</span>
+                            <span class="font-semibold text-slate-900">🏃 间歇跑</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 50min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>慢跑1km + 动态拉伸 + 3×100m跨步跑</p>
+                            <p><span class="font-medium text-slate-800">主课：</span></p>
+                            <p class="pl-3">• <strong>6×400m</strong> @ 比目标比赛配速快5-10秒/km</p>
+                            <p class="pl-3">• 每组间慢跑200m/步行恢复（约90秒）</p>
+                            <p><span class="font-medium text-slate-800">冷身：</span>慢跑800m + 拉伸</p>
+                        </div>
+                    </div>
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D9</span>
+                            <span class="font-semibold text-slate-900">💪 力量 · 推拉模式</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 55min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>5min动态 + 激活</p>
+                            <p><span class="font-medium text-slate-800">主课（5轮，组间休息60秒）：</span></p>
+                            <p class="pl-3">• 🏋️ 杠铃卧推/哑铃上斜推 8次</p>
+                            <p class="pl-3">• 🏋️ 杠铃深蹲 6-8次（中等重量）</p>
+                            <p class="pl-3">• 🏋️ 龙门架绳索划船 10次</p>
+                            <p class="pl-3">• 🫲 壶铃单臂过顶推举 8次/侧</p>
+                            <p class="pl-3">• 🤸 平板支撑 45秒</p>
+                            <p><span class="font-medium text-slate-800">冷身：</span>胸椎伸展 + 髋部拉伸</p>
+                        </div>
+                    </div>
+                    <div class="day-card border-dashed opacity-60">
+                        <div class="flex items-center gap-3">
+                            <span class="day-number" style="background:#94a3b8;">休</span>
+                            <span class="font-semibold text-slate-500">休息</span>
+                        </div>
+                    </div>
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D10</span>
+                            <span class="font-semibold text-slate-900">🔄 高强度功能循环</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 55min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>划船500m + 动态动作</p>
+                            <p><span class="font-medium text-slate-800">主课（4轮，组间休息90秒 → 缩短至60秒）：</span></p>
+                            <p class="pl-3">• 🚣 划船机 500m @ 目标比赛配速</p>
+                            <p class="pl-3">• 🏋️ 壶铃硬拉 15次（加重）</p>
+                            <p class="pl-3">• 🏋️ 杠铃/哑铃弓步行走 12步/侧</p>
+                            <p class="pl-3">• 🫲 农夫行走 50m（加重）</p>
+                            <p class="pl-3">• 🤸 波比跳远 16次</p>
+                            <div class="sub-box mt-3 text-xs">
+                                <i class="fas fa-lightbulb"></i> <strong>雪橇推替代：</strong> 龙门架低位绳索，站姿弓步推（模拟雪橇推姿势）4组×15m × 中等阻力
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 4 -->
+                <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-slate-800 text-white text-xs flex items-center justify-center">4</span>
+                    第4周
+                </h4>
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D11</span>
+                            <span class="font-semibold text-slate-900">🏃 变速跑 + 配速练习</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 50min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>慢跑1km + 动态拉伸</p>
+                            <p><span class="font-medium text-slate-800">主课：</span></p>
+                            <p class="pl-3">• 1km 轻松热身</p>
+                            <p class="pl-3">• <strong>3×1km</strong> @ 目标比赛配速（针对双人组：预计5:00-5:30/km），组间慢跑2min恢复</p>
+                            <p class="pl-3">• 1km 轻松冷身</p>
+                            <p><span class="font-medium text-slate-800">冷身：</span>拉伸小腿、髋屈肌、腘绳肌</p>
+                        </div>
+                    </div>
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D12</span>
+                            <span class="font-semibold text-slate-900">💪 力量 · 后链强化</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 55min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>壶铃摇摆2×15 + 髋部拉伸</p>
+                            <p><span class="font-medium text-slate-800">主课（4轮，组间休息60-90秒）：</span></p>
+                            <p class="pl-3">• 🏋️ 六角杠/杠铃硬拉 5次（稍重）</p>
+                            <p class="pl-3">• 🏋️ 保加利亚分腿蹲 8次/侧</p>
+                            <p class="pl-3">• 🏋️ 哑铃俯身划船 10次/侧</p>
+                            <p class="pl-3">• 🫲 壶铃高脚杯深蹲 12次</p>
+                            <p class="pl-3">• 🤸 悬垂举腿 12次</p>
+                            <p><span class="font-medium text-slate-800">冷身：</span>腘绳肌拉伸 + 猫牛式脊柱活动</p>
+                        </div>
+                    </div>
+                    <div class="day-card border-dashed opacity-60">
+                        <div class="flex items-center gap-3">
+                            <span class="day-number" style="background:#94a3b8;">休</span>
+                            <span class="font-semibold text-slate-500">休息</span>
+                        </div>
+                    </div>
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D13</span>
+                            <span class="font-semibold text-slate-900">🔄 半程模拟‍🔥</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 65min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p class="font-medium text-amber-600 text-sm">⚠️ 本周最重要的一次训练！</p>
+                            <p><span class="font-medium text-slate-800">半程模拟（模拟比赛前4个站）：</span></p>
+                            <p class="pl-3">🏃 跑1km @ 目标配速 → 🚣 划船机 1000m</p>
+                            <p class="pl-3">🏃 跑1km @ 目标配速 → 🏋️ <strong>雪橇推替代</strong>（龙门架低位推 25m）+ 壶铃摇摆20次</p>
+                            <p class="pl-3">🏃 跑1km @ 目标配速 → 🏋️ <strong>雪橇拉替代</strong>（龙门架低位拉 25m）+ 壶铃硬拉15次</p>
+                            <p class="pl-3">🏃 跑1km @ 目标配速 → 🤸 波比跳远 40m（简化版约20-25次）</p>
+                            <p><span class="font-medium text-slate-800">重点：</span>过渡区控制在15秒以内！跑完立刻走向站点，不要坐下</p>
+                            <p><span class="font-medium text-slate-800">🔑 双人合作：</span>和搭档一起做！一人做站时另一人慢跑或准备，轮换节奏与比赛一致</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ PHASE 3: INTENSIFY ============ -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 mt-6">
+    <div class="phase-card" id="phase3">
+        <div class="phase-header" onclick="togglePhase(this)">
+            <div class="flex items-center gap-4">
+                <span class="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-fire text-orange-600 text-lg"></i>
+                </span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">第三阶段 · 强度冲刺</h3>
+                    <p class="text-sm text-slate-500">第5周（Day 29-35）— 峰值跑步量与比赛配速</p>
+                </div>
+            </div>
+            <i class="fas fa-chevron-down text-slate-400 chevron"></i>
+        </div>
+        <div class="accordion-content">
+            <div class="phase-body">
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span class="px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-semibold">目标：峰值周</span>
+                    <span class="px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-semibold">跑步量：18-20km</span>
+                    <span class="px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-semibold">比赛配速</span>
+                    <span class="px-3 py-1 rounded-full bg-orange-100 text-orange-700 text-xs font-semibold">高强度训练</span>
+                </div>
+
+                <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-slate-800 text-white text-xs flex items-center justify-center">5</span>
+                    第5周
+                </h4>
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D14</span>
+                            <span class="font-semibold text-slate-900">🏃 长间歇 + 配速训练</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 55min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>慢跑1km + 动态拉伸 + 跨步跑3×100m</p>
+                            <p><span class="font-medium text-slate-800">主课：</span></p>
+                            <p class="pl-3">• <strong>4×800m</strong> @ 目标比赛配速（略快于5km配速）</p>
+                            <p class="pl-3">• 组间慢跑400m恢复（约2min）</p>
+                            <p class="pl-3">• 最后加 <strong>1km @ 目标比赛配速</strong></p>
+                            <p><span class="font-medium text-slate-800">冷身：</span>轻松跑800m + 拉伸</p>
+                        </div>
+                    </div>
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D15</span>
+                            <span class="font-semibold text-slate-900">💪 力量维护</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 50min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>5min动态</p>
+                            <p><span class="font-medium text-slate-800">主课（3轮，组间休息60秒，维持力量不追求力竭）：</span></p>
+                            <p class="pl-3">• 🏋️ 杠铃深蹲 5-6次（中等偏重）</p>
+                            <p class="pl-3">• 🏋️ 哑铃火箭推 10次</p>
+                            <p class="pl-3">• 🏋️ 高位下拉 8次</p>
+                            <p class="pl-3">• 🫲 农夫行走 60m（最大可承受重量）</p>
+                            <p><span class="font-medium text-slate-800">冷身：</span>全身拉伸</p>
+                        </div>
+                    </div>
+                    <div class="day-card border-dashed opacity-60">
+                        <div class="flex items-center gap-3">
+                            <span class="day-number" style="background:#94a3b8;">休</span>
+                            <span class="font-semibold text-slate-500">休息</span>
+                        </div>
+                    </div>
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D16</span>
+                            <span class="font-semibold text-slate-900">🔄 高强度转换训练</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 60min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>慢跑800m + 划船500m</p>
+                            <p><span class="font-medium text-slate-800">主课（3轮，组间休息3min，全力投入）：</span></p>
+                            <p class="pl-3">🏃 <strong>跑800m @ 比赛配速</strong></p>
+                            <p class="pl-3">→ 🚣 划船机 500m @ 比赛配速</p>
+                            <p class="pl-3">→ 🏋️ 壶铃摇摆 20次（加重）</p>
+                            <p class="pl-3">→ 🫲 农夫行走 50m（加重）</p>
+                            <p class="pl-3">→ 🤸 波比跳远 16次</p>
+                            <p class="pl-3">→ <strong>立即</strong> 🏃 跑400m @ 比赛配速</p>
+                            <p><span class="font-medium text-slate-800">重点：</span>这一系列的终点是模拟比赛后半程的"疲劳叠加"状态！</p>
+                        </div>
+                    </div>
+                    <div class="day-card mt-4">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D17</span>
+                            <span class="font-semibold text-slate-900">🏃 轻松恢复跑</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 35min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">主课：</span>3-4km 轻松恢复跑（非常轻松的配速，能完整对话）</p>
+                            <p><span class="font-medium text-slate-800">冷身：</span>泡沫轴放松 · 全身拉伸15min</p>
+                            <p class="text-xs text-slate-400 mt-2">💡 这一周跑步量达到峰值，恢复日至关重要！</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ PHASE 4: RACE SIM ============ -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 mt-6">
+    <div class="phase-card" id="phase4">
+        <div class="phase-header" onclick="togglePhase(this)">
+            <div class="flex items-center gap-4">
+                <span class="w-10 h-10 rounded-xl bg-red-100 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-bolt text-red-600 text-lg"></i>
+                </span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">第四阶段 · 比赛模拟</h3>
+                    <p class="text-sm text-slate-500">第6周（Day 36-42）— 完整模拟与策略定型</p>
+                </div>
+            </div>
+            <i class="fas fa-chevron-down text-slate-400 chevron"></i>
+        </div>
+        <div class="accordion-content">
+            <div class="phase-body">
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-semibold">目标：模拟比赛</span>
+                    <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-semibold">跑步量：14-16km</span>
+                    <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-semibold">比赛配速</span>
+                    <span class="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-semibold">转换熟练</span>
+                </div>
+
+                <h4 class="font-bold text-slate-800 mb-3 flex items-center gap-2">
+                    <span class="w-6 h-6 rounded-full bg-slate-800 text-white text-xs flex items-center justify-center">6</span>
+                    第6周
+                </h4>
+                <div class="grid md:grid-cols-2 gap-4 mb-4">
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D18</span>
+                            <span class="font-semibold text-slate-900">🏃 配速确认跑</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 45min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>慢跑1km + 动态拉伸</p>
+                            <p><span class="font-medium text-slate-800">主课：</span></p>
+                            <p class="pl-3">• 1km 轻松热身</p>
+                            <p class="pl-3">• <strong>3×1km</strong> @ 目标比赛配速（确认配速感觉）</p>
+                            <p class="pl-3">• 1km 轻松冷身</p>
+                            <p><span class="font-medium text-slate-800">心理准备：</span>想象每次跑完1km后要进入站点，建立配速信心</p>
+                        </div>
+                    </div>
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D19</span>
+                            <span class="font-semibold text-slate-900">💪 轻力量 + 握力训练</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 45min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>5min动态 + 握力激活</p>
+                            <p><span class="font-medium text-slate-800">主课（3轮，组间休息60秒）：</span></p>
+                            <p class="pl-3">• 🏋️ 农夫行走 60m（比赛重量或更重，握力训练！）</p>
+                            <p class="pl-3">• 🏋️ 壶铃单臂硬拉 10次/侧（控制节奏）</p>
+                            <p class="pl-3">• 🏋️ 引体向上/高位下拉 8次</p>
+                            <p class="pl-3">• 🏋️ 哑铃火箭推 10次（比赛节奏模拟）</p>
+                            <p><span class="font-medium text-slate-800">冷身：</span>握力放松 + 前臂拉伸</p>
+                        </div>
+                    </div>
+                    <div class="day-card border-dashed opacity-60">
+                        <div class="flex items-center gap-3">
+                            <span class="day-number" style="background:#94a3b8;">休</span>
+                            <span class="font-semibold text-slate-500">休息</span>
+                        </div>
+                    </div>
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D20</span>
+                            <span class="font-semibold text-slate-900">🏁 半程模拟 2.0</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 60min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p class="font-medium text-amber-600 text-sm">⚠️ 用比赛重量，模拟后4个站</p>
+                            <p><span class="font-medium text-slate-800">模拟下半程（站5-8）：</span></p>
+                            <p class="pl-3">🏃 跑1km → 🚣 划船机 1000m（比赛配速，专注技术）</p>
+                            <p class="pl-3">🏃 跑1km → 🫲 农夫行走 100m（比赛重量或略重）</p>
+                            <p class="pl-3">🏃 跑1km → 🏋️ 杠铃/壶铃弓步行走 40步（模拟沙袋弓步）</p>
+                            <p class="pl-3">🏃 跑1km → 🏋️ 火箭推 50次（模拟墙球：分5组完成，逐组减少休息）</p>
+                            <p><span class="font-medium text-slate-800">🔑 双人重点：</span>与搭档讨论最后的馆子分工——谁做墙球、谁做弓步？最后1km谁状态好谁带节奏冲刺</p>
+                        </div>
+                    </div>
+                    <div class="day-card mt-4">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D21</span>
+                            <span class="font-semibold text-slate-900">🏃 短间歇冲刺</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 40min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">热身：</span>慢跑1km + 动态拉伸</p>
+                            <p><span class="font-medium text-slate-800">主课：</span></p>
+                            <p class="pl-3">• <strong>8×200m</strong> @ 5km配速（快于比赛配速）</p>
+                            <p class="pl-3">• 每组间慢走200m充分恢复</p>
+                            <p><span class="font-medium text-slate-800">目的：</span>刺激腿部的速度感，为比赛日最后冲刺蓄力</p>
+                            <p><span class="font-medium text-slate-800">冷身：</span>轻松慢跑800m + 拉伸</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ PHASE 5: TAPER ============ -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 mt-6">
+    <div class="phase-card" id="phase5">
+        <div class="phase-header" onclick="togglePhase(this)">
+            <div class="flex items-center gap-4">
+                <span class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center flex-shrink-0">
+                    <i class="fas fa-bed text-purple-600 text-lg"></i>
+                </span>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900">第五阶段 · 减量冲刺</h3>
+                    <p class="text-sm text-slate-500">第7周（Day 43-45）— 减量恢复，全力比赛！</p>
+                </div>
+            </div>
+            <i class="fas fa-chevron-down text-slate-400 chevron"></i>
+        </div>
+        <div class="accordion-content">
+            <div class="phase-body">
+                <div class="flex flex-wrap gap-2 mb-6">
+                    <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-semibold">目标：充分恢复</span>
+                    <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-semibold">跑步量：4-6km</span>
+                    <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-semibold">高碳水饮食</span>
+                    <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-700 text-xs font-semibold">睡眠优先</span>
+                </div>
+
+                <div class="grid md:grid-cols-3 gap-4">
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D22</span>
+                            <span class="font-semibold text-slate-900">🏃 赛前3天 · 轻激活</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 30min</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">主课：</span>2km 轻松跑 + 3×100m 跨步跑（激活神经）</p>
+                            <p><span class="font-medium text-slate-800">可选：</span>5min 划船机轻松划 + 10个火箭推动作激活</p>
+                            <p class="mt-2 text-xs text-slate-500">🥤 开始增加碳水摄入</p>
+                        </div>
+                    </div>
+                    <div class="day-card">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number">D23</span>
+                            <span class="font-semibold text-slate-900">🧘 赛前2天 · 完全休息</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 休息</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p>不训练！</p>
+                            <p>推荐：</p>
+                            <p class="pl-3">• 散步15-20min（可选）</p>
+                            <p class="pl-3">• 泡沫轴轻度放松</p>
+                            <p class="pl-3">• 🥩 高碳水饮食（意面/米饭/土豆）</p>
+                            <p class="pl-3">• 💧 大量饮水 3L+</p>
+                            <p class="pl-3">• 😴 早睡，睡够8-9小时</p>
+                        </div>
+                    </div>
+                    <div class="day-card" style="border-color: #f87171; border-width: 2px;">
+                        <div class="flex items-center gap-3 mb-3">
+                            <span class="day-number" style="background: #dc2626;">🏁</span>
+                            <span class="font-semibold text-slate-900 text-lg">比赛日！</span>
+                            <span class="ml-auto text-xs text-slate-400"><i class="far fa-clock"></i> 全力出击</span>
+                        </div>
+                        <div class="space-y-2 text-sm text-slate-600">
+                            <p><span class="font-medium text-slate-800">赛前：</span></p>
+                            <p class="pl-3">• 早餐：高碳水（燕麦/香蕉/吐司）+ 少量蛋白</p>
+                            <p class="pl-3">• 提前60-90分钟到达场地</p>
+                            <p class="pl-3">• 轻动态热身 10-15min</p>
+                            <p><span class="font-medium text-slate-800">赛中策略：</span></p>
+                            <p class="pl-3">• 前3个1km压住配速（偏慢5秒）</p>
+                            <p class="pl-3">• 第4-6个1km稳住比赛配速</p>
+                            <p class="pl-3">• 最后2个1km全力冲刺</p>
+                            <p class="pl-3">• 过渡区不坐下，喝水即走</p>
+                            <p class="mt-2 text-center font-bold text-red-600 text-base">🏆 冲线！享受这一刻！</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ SUPPLEMENTARY INFO ============ -->
+<section class="max-w-5xl mx-auto px-4 sm:px-6 mt-10 mb-16">
+    <div class="grid md:grid-cols-2 gap-6">
+        <!-- Nutrition -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="w-10 h-10 rounded-xl bg-green-100 flex items-center justify-center">
+                    <i class="fas fa-apple-alt text-green-600"></i>
+                </span>
+                <h3 class="text-lg font-bold text-slate-900">🍎 饮食建议</h3>
+            </div>
+            <div class="space-y-2 text-sm text-slate-600">
+                <p><span class="font-medium text-slate-800">每日基础：</span>蛋白质 1.6-2.0g/kg体重 · 足量碳水（训练前后）</p>
+                <p><span class="font-medium text-slate-800">训练前（1-2h）：</span>香蕉+燕麦/全麦吐司+花生酱</p>
+                <p><span class="font-medium text-slate-800">训练后（30min内）：</span>蛋白粉+快碳 / 鸡胸+米饭</p>
+                <p><span class="font-medium text-slate-800">补水：</span>日常2-3L水 · 训练超60min添加电解质</p>
+                <p><span class="font-medium text-slate-800">补充剂：</span>肌酸5g/天 · 训练日BCAA可选</p>
+                <p><span class="font-medium text-slate-800">赛前2天：</span>碳水加载（米饭/意面/土豆为主）</p>
+            </div>
+        </div>
+
+        <!-- Race Day Checklist -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="w-10 h-10 rounded-xl bg-amber-100 flex items-center justify-center">
+                    <i class="fas fa-clipboard-check text-amber-600"></i>
+                </span>
+                <h3 class="text-lg font-bold text-slate-900">✅ 比赛日清单</h3>
+            </div>
+            <div class="space-y-2 text-sm">
+                <label class="flex items-start gap-3 cursor-pointer group">
+                    <input type="checkbox" class="mt-1 rounded border-slate-300 text-amber-600 focus:ring-amber-500">
+                    <span class="text-slate-600 group-hover:text-slate-900">👟 合适的跑鞋（不要太新）</span>
+                </label>
+                <label class="flex items-start gap-3 cursor-pointer group">
+                    <input type="checkbox" class="mt-1 rounded border-slate-300 text-amber-600 focus:ring-amber-500">
+                    <span class="text-slate-600 group-hover:text-slate-900">👕 透气速干衣裤（不要棉质）</span>
+                </label>
+                <label class="flex items-start gap-3 cursor-pointer group">
+                    <input type="checkbox" class="mt-1 rounded border-slate-300 text-amber-600 focus:ring-amber-500">
+                    <span class="text-slate-600 group-hover:text-slate-900">🧤 手套（保护手掌）</span>
+                </label>
+                <label class="flex items-start gap-3 cursor-pointer group">
+                    <input type="checkbox" class="mt-1 rounded border-slate-300 text-amber-600 focus:ring-amber-500">
+                    <span class="text-slate-600 group-hover:text-slate-900">💧 水壶 + 电解质粉</span>
+                </label>
+                <label class="flex items-start gap-3 cursor-pointer group">
+                    <input type="checkbox" class="mt-1 rounded border-slate-300 text-amber-600 focus:ring-amber-500">
+                    <span class="text-slate-600 group-hover:text-slate-900">🍌 香蕉/能量胶（过渡区补给）</span>
+                </label>
+                <label class="flex items-start gap-3 cursor-pointer group">
+                    <input type="checkbox" class="mt-1 rounded border-slate-300 text-amber-600 focus:ring-amber-500">
+                    <span class="text-slate-600 group-hover:text-slate-900">🧦 压缩袜（可选，减少小腿疲劳）</span>
+                </label>
+                <label class="flex items-start gap-3 cursor-pointer group">
+                    <input type="checkbox" class="mt-1 rounded border-slate-300 text-amber-600 focus:ring-amber-500">
+                    <span class="text-slate-600 group-hover:text-slate-900">📋 与搭档确认最终分工策略</span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Pacing Guide -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">
+                    <i class="fas fa-tachometer-alt text-blue-600"></i>
+                </span>
+                <h3 class="text-lg font-bold text-slate-900">🎯 配速指南</h3>
+            </div>
+            <div class="space-y-2 text-sm text-slate-600">
+                <p class="font-medium text-slate-800">双人组目标完赛时间估算：</p>
+                <div class="bg-slate-50 rounded-xl p-3 mt-2">
+                    <table class="w-full text-sm">
+                        <tr class="border-b border-slate-200">
+                            <td class="py-1 font-medium">目标完赛</td>
+                            <td class="py-1">70-85 分钟</td>
+                        </tr>
+                        <tr class="border-b border-slate-200">
+                            <td class="py-1 font-medium">每km配速</td>
+                            <td class="py-1">5:00-5:30 / km</td>
+                        </tr>
+                        <tr class="border-b border-slate-200">
+                            <td class="py-1 font-medium">每个站点时长</td>
+                            <td class="py-1">约2-3分钟/站（两人轮流）</td>
+                        </tr>
+                        <tr>
+                            <td class="py-1 font-medium">过渡区</td>
+                            <td class="py-1">≤15秒/次</td>
+                        </tr>
+                    </table>
+                </div>
+                <p class="mt-2 text-xs text-slate-400">💡 前3km压5-10秒，中间稳住，最后2km发力！</p>
+            </div>
+        </div>
+
+        <!-- Recovery Tips -->
+        <div class="bg-white rounded-2xl border border-slate-200 p-6">
+            <div class="flex items-center gap-3 mb-4">
+                <span class="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center">
+                    <i class="fas fa-heartbeat text-purple-600"></i>
+                </span>
+                <h3 class="text-lg font-bold text-slate-900">🛌 恢复要点</h3>
+            </div>
+            <div class="space-y-2 text-sm text-slate-600">
+                <p><span class="font-medium text-slate-800">睡眠：</span>每天7-9小时，训练日优先保证8h</p>
+                <p><span class="font-medium text-slate-800">主动恢复：</span>休息日散步/轻骑行20-30min</p>
+                <p><span class="font-medium text-slate-800">泡沫轴：</span>重点放松小腿、股四头肌、髋屈肌、背阔肌</p>
+                <p><span class="font-medium text-slate-800">拉伸：</span>每次训练后10min静态拉伸，不可省略</p>
+                <p><span class="font-medium text-slate-800">冷热交替浴：</span>可选，高强度训练后帮助恢复</p>
+                <p><span class="font-medium text-slate-800">警告信号：</span>关节刺痛/持续疼痛→停止→咨询康复师</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Final CTA -->
+    <div class="mt-8 bg-gradient-to-r from-slate-900 to-slate-800 rounded-2xl p-8 text-center">
+        <i class="fas fa-trophy text-4xl text-amber-400 mb-4"></i>
+        <h3 class="text-2xl font-black text-white mb-2">你和搭档，准备好了吗？</h3>
+        <p class="text-slate-300 max-w-lg mx-auto mb-6">
+            坚持执行这份计划，45天后你们将站在HYROX赛场上，完成8km跑步与8个站点的挑战。
+            享受训练的过程，比赛日就是你们的show time！
+        </p>
+        <div class="flex flex-wrap justify-center gap-3">
+            <span class="px-5 py-2.5 rounded-full bg-white/10 text-white text-sm font-semibold border border-white/20">
+                <i class="fas fa-check-circle text-emerald-400 mr-1"></i> 23岁 · 黄金体能
+            </span>
+            <span class="px-5 py-2.5 rounded-full bg-white/10 text-white text-sm font-semibold border border-white/20">
+                <i class="fas fa-users text-blue-400 mr-1"></i> 双人组 · 并肩作战
+            </span>
+            <span class="px-5 py-2.5 rounded-full bg-white/10 text-white text-sm font-semibold border border-white/20">
+                <i class="fas fa-rocket text-orange-400 mr-1"></i> 45天 · 全力以赴
+            </span>
+        </div>
+    </div>
+</section>
+
+<script>
+    function togglePhase(el) {
+        const card = el.closest('.phase-card');
+        const content = card.querySelector('.accordion-content');
+        content.classList.toggle('open');
+        el.classList.toggle('open');
+        const chevron = el.querySelector('.chevron');
+        if (chevron) chevron.style.transform = content.classList.contains('open') ? 'rotate(180deg)' : 'rotate(0deg)';
+    }
+</script>
+
+</body>
+</html>
